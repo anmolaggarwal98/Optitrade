@@ -1,0 +1,9 @@
+## OptiTrade 
+### OxfordHack 
+
+The description of the challenge can be found here: https://github.com/jundl77/optiver-optitrade-challenge
+
+Over the weekend, I took part in OxfordHack and did the **Algorithmic Trading Challenge** sponsored by Prop Trading firm **Optiver**. In this challenge, we had to develop a trading algorithm that can make a profit on the virtual exchange, while trading live against other hackers and coding in python. My strategy which is written below goes as follows: 
+
+I fix the nuumber of datapoints (i.e bid/ask price I am looking for both ESX and S&P futures) to $10$ and create an array of vector $$\text{trade_vec} = \{v_1,...,v_{10}\}$$ where if the trade excuted was *bid_volume* (i.e. you are selling/ market makers are buying these many volumes of you), the volume $v_i$ was given a negative value. Hence in the below code, I have defined a function `sign` which does exactly that. I fix the number of volumes that I will trade in a single go by $500$ which can be changed if required. I now define: 
+$$ s = \sum_{i=1}^{i=10} v_i \\ \tilde{s} = \sum_{i=1}^{i=10} |v_i|$$ Then clearly the ratio $$r = \frac{s}{\tilde{s}} \in [-1,1]$$ so if the ratio $r\approx 0$ or close to zero, then they are equal number of buys and sellers in the market, hence I do not expect the price of the futures to change too much. however if $r$ is close to 1, then there are a lot more buyers than sellers, and similarly if $r$ is close to -1, then there are more sellers than buyers,; hence this inbalance in buyers and sellers will lead to change in prices and I trade according to this where my *endpoints* were set at $0.6$. So my strategy is based on this with number of volumes I trade are fixed at $500$. However, the next step would be to change the size of volume I trade and do risk management so that I do not end up taking too much exposure. 
